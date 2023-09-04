@@ -3,6 +3,9 @@ Welcome to the SCANOSS Platform 2.0 purl helper package.
 
 This package contains helper functions to make development of Go services easier to configure for purl processing.
 
+[![Golang CI Lint](https://github.com/scanoss/go-purl-helper/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/scanoss/go-purl-helper/actions/workflows/golangci-lint.yml)
+[![Go Unit Test](https://github.com/scanoss/go-purl-helper/actions/workflows/go-ci.yml/badge.svg)](https://github.com/scanoss/go-purl-helper/actions/workflows/go-ci.yml)
+
 ## Usage
 There are a number of helper functions in this package. More details about each one can be found in the packaged documentation.
 
