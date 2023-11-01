@@ -1,4 +1,2 @@
-github.com/package-url/packageurl-go v0.1.0 h1:efWBc98O/dBZRg1pw2xiDzovnlMjCa9NPnfaiBduh8I=
-github.com/package-url/packageurl-go v0.1.0/go.mod h1:C/ApiuWpmbpni4DIOECf6WCjFUZV7O1Fx7VAzrZHgBw=
-github.com/package-url/packageurl-go v0.1.1 h1:KTRE0bK3sKbFKAk3yy63DpeskU7Cvs/x/Da5l+RtzyU=
-github.com/package-url/packageurl-go v0.1.1/go.mod h1:uQd4a7Rh3ZsVg5j0lNyAfyxIeGde9yrlhjF78GzeW0c=
+github.com/package-url/packageurl-go v0.1.2 h1:0H2DQt6DHd/NeRlVwW4EZ4oEI6Bn40XlNPRqegcxuo4=
+github.com/package-url/packageurl-go v0.1.2/go.mod h1:uQd4a7Rh3ZsVg5j0lNyAfyxIeGde9yrlhjF78GzeW0c=
