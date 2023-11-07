@@ -119,6 +119,8 @@ func ProjectUrl(purlName, purlType string) (string, error) {
 		return fmt.Sprintf("https://pypi.org/project/%v", purlName), nil
 	case "golang":
 		return fmt.Sprintf("https://pkg.go.dev/%v", purlName), nil
+	case "nuget":
+		return fmt.Sprintf("https://www.nuget.org/packages/%v", purlName), nil
 	}
 	return "", fmt.Errorf("no url prefix found for '%v': %v", purlType, purlName)
 }

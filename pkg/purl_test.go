@@ -226,6 +226,12 @@ func TestPurlUrl(t *testing.T) {
 			want:  "https://pkg.go.dev/github.com/scanoss/papi",
 		},
 		{
+			name:  "NuGet",
+			pname: "System.Buffers",
+			ptype: "nuget",
+			want:  "https://www.nuget.org/packages/System.Buffers",
+		},
+		{
 			name:    "Empty String1",
 			pname:   "",
 			ptype:   "gem",

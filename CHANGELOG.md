@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Upcoming changes...
 
+## [0.2.0] - 2023-11-07
+### Added
+- Added URL support for `nuget`
+
 ## [0.1.0] - 2023-09-04
 ### Added
 - Added GH Workflows and linting
@@ -19,3 +23,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added initial set of Purl helper functions
 
 [0.0.1]: https://github.com/scanoss/go-purl-helper/compare/v0.0.0...v0.0.1
+[0.1.0]: https://github.com/scanoss/go-purl-helper/compare/v0.0.1...v0.1.0
+[0.2.0]: https://github.com/scanoss/go-purl-helper/compare/v0.1.0...v0.2.0
