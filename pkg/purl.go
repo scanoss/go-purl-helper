@@ -36,7 +36,9 @@ import (
 
 var pkgRegex = regexp.MustCompile(`^pkg:(?P<type>\w+)/(?P<name>.+)$`) // regex to parse purl name from purl string
 var typeRegex = regexp.MustCompile(`^(npm|nuget)$`)                   // regex to parse purl types that should not be lower cased
-var vRegex = regexp.MustCompile(`^(=|==|)(?P<name>\w+\S+)$`)          // regex to parse purl name from purl string
+var vRegex = regexp.MustCompile(`^(=|==|)(?P<name>\w+\S+)$`)          // regex to strip version operators and parse version string
+// vReqRegex strips all common semver operators (>=, <=, !=, ~=, ==, >, <, =, ~, ^) from a version requirement string.
+var vReqRegex = regexp.MustCompile(`^(?:>=|<=|!=|~=|==|[><=~^])?v?(?P<version>\d\S+)$`)
 
 // PurlFromString takes an input Purl string and returns a decomposed structure of all the elements
 func PurlFromString(purlString string) (packageurl.PackageURL, error) {
@@ -76,7 +78,7 @@ func PurlNameFromString(purlString string) (string, error) {
 func ConvertGoPurlStringToGithub(purlString string) string {
 	// Replace Golang GitHub package reference with just GitHub
 	if len(purlString) > 0 && strings.HasPrefix(purlString, "pkg:golang/github.com/") {
-		s := strings.Replace(purlString, "pkg:golang/github.com/", "pkg:github/", -1)
+		s := strings.ReplaceAll(purlString, "pkg:golang/github.com/", "pkg:github/")
 		p := strings.Split(s, "/")
 		if len(p) >= 3 {
 			return fmt.Sprintf("%s/%s/%s", p[0], p[1], p[2]) // Only return the GitHub part of the url
@@ -93,6 +95,19 @@ func GetVersionFromReq(purlReq string) string {
 		ni := vRegex.SubexpIndex("name")
 		if ni >= 0 {
 			return matches[ni]
+		}
+	}
+	return ""
+}
+
+// GetVersionFromReqOperator parses a requirement string stripping any semver operator prefix
+// and returns the version portion. Supports: >=, <=, !=, ~=, ==, >, <, =, ~, ^, or no operator.
+func GetVersionFromReqOperator(purlReq string) string {
+	matches := vReqRegex.FindStringSubmatch(purlReq)
+	if len(matches) > 0 {
+		vi := vReqRegex.SubexpIndex("version")
+		if vi >= 0 {
+			return matches[vi]
 		}
 	}
 	return ""
