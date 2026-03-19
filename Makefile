@@ -1,3 +1,6 @@
+## Constants
+# Linter version
+LINT_VERSION := v2.10.1
 
 # HELP
 # This will output the help for each task
@@ -19,8 +22,18 @@ unit_test:  ## Run all unit tests in the pkg folder
 
 test:  unit_test ## Run package tests
 
+unit_test_coverage:  ## Run all unit tests in the pkg folder and get test coverage
+	@echo "Running unit test with coverage..."
+	go test -coverprofile=coverage.txt ./... && go tool cover -func=coverage.txt
+
 lint_local: ## Run local instance of linting across the code base
 	golangci-lint run ./...
 
+lint_local_fix: ## Run local instance of linting across the code base including auto-fixing
+	golangci-lint run --fix ./...
+
 lint_docker: ## Run docker instance of linting across the code base
-	docker run --rm -v $(PWD):/app -v ~/.cache/golangci-lint/v1.50.1:/root/.cache -w /app golangci/golangci-lint:v1.50.1 golangci-lint run ./...
+	docker run --rm -v $(PWD):/app -v ~/.cache/golangci-lint/$(LINT_VERSION):/root/.cache -w /app golangci/golangci-lint:$(LINT_VERSION) golangci-lint run ./...
+
+lint_docker_fix: ## Run docker instance of linting across the code base including auto-fixing
+	docker run --rm -v $(PWD):/app -v ~/.cache/golangci-lint/$(LINT_VERSION):/root/.cache -w /app golangci/golangci-lint:$(LINT_VERSION) golangci-lint run --fix ./...
