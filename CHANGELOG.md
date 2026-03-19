@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] - 2026-03-19
 ### Added
 - Added `GetVersionFromReqOperator` function to strip all common semver operators (`>=`, `<=`, `!=`, `~=`, `==`, `>`, `<`, `=`, `~`, `^`) and `v` prefix from version requirement strings
+- Added `conan` PURL to URL conversion
 ### Fixed
 - Replaced `strings.Replace` with `strings.ReplaceAll` in `ConvertGoPurlStringToGithub` to satisfy linter
 
@@ -21,10 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added GH Workflows and linting
 
-
 ## [0.0.1] - 2022-10-21
 ### Added
-- Added initial set of Purl helper functions
+- Added an initial set of Purl helper functions
 
 [0.0.1]: https://github.com/scanoss/go-purl-helper/compare/v0.0.0...v0.0.1
 [0.1.0]: https://github.com/scanoss/go-purl-helper/compare/v0.0.1...v0.1.0

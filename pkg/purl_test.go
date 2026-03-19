@@ -24,15 +24,15 @@
 package purlutils
 
 import (
-	"github.com/package-url/packageurl-go"
 	"reflect"
 	"testing"
+
+	"github.com/package-url/packageurl-go"
 )
 
 // Help with test details can be found here: https://go.dev/doc/code
 
 func TestPurlFromString(t *testing.T) {
-
 	w, _ := packageurl.FromString("pkg:maven/io.prestosql/presto-main@v1.0")
 	w2, _ := packageurl.FromString("pkg:npm/%40babel/core")
 	tests := []struct {
@@ -230,6 +230,12 @@ func TestPurlUrl(t *testing.T) {
 			pname: "System.Buffers",
 			ptype: "nuget",
 			want:  "https://www.nuget.org/packages/System.Buffers",
+		},
+		{
+			name:  "Conan",
+			pname: "boost",
+			ptype: "conan",
+			want:  "https://conan.io/center/recipes/boost",
 		},
 		{
 			name:    "Empty String1",
