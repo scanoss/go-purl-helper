@@ -21,17 +21,16 @@
  * THE SOFTWARE.
  */
 
+// Package purlutils provides utilities for working with Package URL (PURL) strings.
 package purlutils
 
 import (
 	"errors"
-	"github.com/package-url/packageurl-go"
-	"regexp"
-)
-
-import (
 	"fmt"
+	"regexp"
 	"strings"
+
+	"github.com/package-url/packageurl-go"
 )
 
 var pkgRegex = regexp.MustCompile(`^pkg:(?P<type>\w+)/(?P<name>.+)$`) // regex to parse purl name from purl string
@@ -40,7 +39,7 @@ var vRegex = regexp.MustCompile(`^(=|==|)(?P<name>\w+\S+)$`)          // regex t
 // vReqRegex strips all common semver operators (>=, <=, !=, ~=, ==, >, <, =, ~, ^) from a version requirement string.
 var vReqRegex = regexp.MustCompile(`^(?:>=|<=|!=|~=|==|[><=~^])?v?(?P<version>\d\S+)$`)
 
-// PurlFromString takes an input Purl string and returns a decomposed structure of all the elements
+// PurlFromString takes an input Purl string and returns a decomposed structure of all the elements.
 func PurlFromString(purlString string) (packageurl.PackageURL, error) {
 	if len(purlString) == 0 {
 		return packageurl.PackageURL{}, errors.New("no Purl string specified to parse")
@@ -52,7 +51,7 @@ func PurlFromString(purlString string) (packageurl.PackageURL, error) {
 	return purl, nil
 }
 
-// PurlNameFromString take an input Purl string and returns the Purl Name only
+// PurlNameFromString take an input Purl string and returns the Purl Name only.
 func PurlNameFromString(purlString string) (string, error) {
 	if len(purlString) == 0 {
 		return "", fmt.Errorf("no purl string supplied to parse")
@@ -74,7 +73,7 @@ func PurlNameFromString(purlString string) (string, error) {
 	return "", fmt.Errorf("no purl name found in '%v'", purlString)
 }
 
-// ConvertGoPurlStringToGithub takes an input PURL string and converts it to its GitHub equivalent if possible
+// ConvertGoPurlStringToGithub takes an input PURL string and converts it to its GitHub equivalent if possible.
 func ConvertGoPurlStringToGithub(purlString string) string {
 	// Replace Golang GitHub package reference with just GitHub
 	if len(purlString) > 0 && strings.HasPrefix(purlString, "pkg:golang/github.com/") {
@@ -88,7 +87,7 @@ func ConvertGoPurlStringToGithub(purlString string) string {
 	return purlString
 }
 
-// GetVersionFromReq parses a requirement string looking for an exact version specifier
+// GetVersionFromReq parses a requirement string looking for an exact version specifier.
 func GetVersionFromReq(purlReq string) string {
 	matches := vRegex.FindStringSubmatch(purlReq)
 	if len(matches) > 0 {
@@ -113,8 +112,8 @@ func GetVersionFromReqOperator(purlReq string) string {
 	return ""
 }
 
-// ProjectUrl returns a browsable URL for the given purl type and name
-func ProjectUrl(purlName, purlType string) (string, error) {
+// ProjectUrl returns a browsable URL for the given purl type and name.
+func ProjectUrl(purlName, purlType string) (string, error) { //nolint:staticcheck
 	if len(purlName) == 0 {
 		return "", fmt.Errorf("no purl name supplied")
 	}
@@ -136,6 +135,8 @@ func ProjectUrl(purlName, purlType string) (string, error) {
 		return fmt.Sprintf("https://pkg.go.dev/%v", purlName), nil
 	case "nuget":
 		return fmt.Sprintf("https://www.nuget.org/packages/%v", purlName), nil
+	case "conan":
+		return fmt.Sprintf("https://conan.io/center/recipes/%v", purlName), nil
 	}
 	return "", fmt.Errorf("no url prefix found for '%v': %v", purlType, purlName)
 }
