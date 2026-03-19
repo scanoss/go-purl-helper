@@ -298,3 +298,95 @@ func TestGetVersionFromReq(t *testing.T) {
 		})
 	}
 }
+
+func TestGetVersionFromReqOperator(t *testing.T) {
+	tests := []struct {
+		name  string
+		input string
+		want  string
+	}{
+		{
+			name:  "No operator",
+			input: "1.0.0",
+			want:  "1.0.0",
+		},
+		{
+			name:  "Version with v prefix",
+			input: "v1.0.0",
+			want:  "1.0.0",
+		},
+		{
+			name:  "Greater than",
+			input: ">1.0.0",
+			want:  "1.0.0",
+		},
+		{
+			name:  "Greater or equal",
+			input: ">=1.2.3",
+			want:  "1.2.3",
+		},
+		{
+			name:  "Less than",
+			input: "<2.0.0",
+			want:  "2.0.0",
+		},
+		{
+			name:  "Less or equal",
+			input: "<=2.0.0",
+			want:  "2.0.0",
+		},
+		{
+			name:  "Not equal",
+			input: "!=1.0.0",
+			want:  "1.0.0",
+		},
+		{
+			name:  "Tilde equal",
+			input: "~=1.4.2",
+			want:  "1.4.2",
+		},
+		{
+			name:  "Tilde",
+			input: "~1.4.2",
+			want:  "1.4.2",
+		},
+		{
+			name:  "Caret",
+			input: "^1.4.2",
+			want:  "1.4.2",
+		},
+		{
+			name:  "Double equal",
+			input: "==1.0.0",
+			want:  "1.0.0",
+		},
+		{
+			name:  "Single equal",
+			input: "=1.0.0",
+			want:  "1.0.0",
+		},
+		{
+			name:  "Operator with v prefix",
+			input: ">=v1.2.3",
+			want:  "1.2.3",
+		},
+		{
+			name:  "Double equal with v prefix",
+			input: "==v1.0.0",
+			want:  "1.0.0",
+		},
+		{
+			name:  "Empty string",
+			input: "",
+			want:  "",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := GetVersionFromReqOperator(tt.input)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("GetVersionFromReqOperator(%q) = %v, want %v", tt.input, got, tt.want)
+			}
+		})
+	}
+}
